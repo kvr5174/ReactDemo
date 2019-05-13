@@ -1,26 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import EmployeeDetails from "./Components/Employee";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+
+class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      displayEmpDetails: false,
+      selectedId: null
+    }
+  }
+
+  displaySelectedEmployeeDetails = (e) => {
+    this.setState({ displayEmpDetails: true, selectedId: e.target.id })
+  }
+
+  render() {
+    return (
+      <React.Fragment>
+        <EmployeeDetails handleClick={this.displaySelectedEmployeeDetails}
+          selectedFields={["Id", "Name", "Department"]} valueType1="primary"
+          valueType2="both" isPrimary={true}
+        />
+        <br /><br />
+        {(this.state.displayEmpDetails) ?
+          <EmployeeDetails
+            selectedID={this.state.selectedId}
+            valueType1="secondary" isPrimary={false}
+            valueType2="both" selectedFields={["Id", "Subject", "Classes", "Salary"]} /> : ""}
+      </React.Fragment>
+
+    );
+  }
+
 }
 
 export default App;
